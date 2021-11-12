@@ -6,8 +6,8 @@ use App\Exceptions\FailToUploadImageException;
 use App\Models\Book;
 use App\UseCases\CoverImage\DeleteCoverImageUseCase;
 use App\UseCases\CoverImage\StoreCoverImageUseCase;
-use App\UseCases\UseCase;
 use Exception;
+use Lib\UseCase;
 
 class CreateBookUseCase extends UseCase {
     private ?string $coverImageURL = null;

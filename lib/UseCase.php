@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UseCases;
+namespace Lib;
 
 use Exception;
 

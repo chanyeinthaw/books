@@ -3,7 +3,7 @@
 namespace App\UseCases\Books;
 
 use App\Models\Book;
-use App\UseCases\UseCase;
+use Lib\UseCase;
 use Illuminate\Database\Eloquent\Collection;
 
 class ListBooksUseCase extends UseCase {

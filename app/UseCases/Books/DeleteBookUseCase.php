@@ -5,7 +5,7 @@ namespace App\UseCases\Books;
 use App\Exceptions\FailToDeleteImageException;
 use App\Models\Book;
 use App\UseCases\CoverImage\DeleteCoverImageUseCase;
-use App\UseCases\UseCase;
+use Lib\UseCase;
 use App\UseCases\Books\Traits\TransformModelNotFoundException;
 
 class DeleteBookUseCase extends UseCase {

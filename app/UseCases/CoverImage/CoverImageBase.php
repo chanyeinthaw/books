@@ -1,7 +1,7 @@
 <?php
 namespace App\UseCases\CoverImage;
 
-use App\UseCases\UseCase;
+use Lib\UseCase;
 
 abstract class CoverImageBase extends UseCase {
     protected string $directory;
