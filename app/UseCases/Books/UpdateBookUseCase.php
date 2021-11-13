@@ -2,6 +2,7 @@
 
 namespace App\UseCases\Books;
 
+use App\Exceptions\FailToUpdateResourceException;
 use App\Exceptions\FailToUploadImageException;
 use App\Models\Book;
 use App\UseCases\Books\Traits\TransformModelNotFoundException;
@@ -10,6 +11,10 @@ use Illuminate\Http\UploadedFile;
 class UpdateBookUseCase extends CreateBookUseCase {
     use TransformModelNotFoundException;
 
+    /**
+     * @throws FailToUploadImageException
+     * @throws FailToUpdateResourceException
+     */
     protected function handler(mixed $input): Book {
         /**
          * @var Book $book;
@@ -23,7 +28,7 @@ class UpdateBookUseCase extends CreateBookUseCase {
             $this->tryCoverImageUpdate($partial['image'], $book);
 
         unset($partial['image']);
-        $book->update($partial);
+        if (!$book->update($partial)) throw new FailToUpdateResourceException('Book', [$book->id]);
 
         return $book;
     }
