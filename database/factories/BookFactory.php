@@ -11,6 +11,7 @@ class BookFactory extends Factory
      * Define the model's default state.
      *
      * @return array
+     * @throws \Exception
      */
     #[ArrayShape(['title' => "string", 'author' => "string", 'description' => "string", 'image' => "string"])]
     public function definition(): array {
@@ -18,7 +19,13 @@ class BookFactory extends Factory
             'title' => $this->faker->city(),
             'author' => $this->faker->name(),
             'description' => $this->faker->sentence(30),
-            'image' => $this->faker->imageUrl(300, 450)
+            'image' => $this->faker->imageUrl(
+                300, 450,
+                null,
+                false,
+                random_int(0, 10) < 5 ? 'foo' : 'bar',
+                true
+            )
         ];
     }
 }
