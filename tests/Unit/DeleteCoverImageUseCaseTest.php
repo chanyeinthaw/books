@@ -31,6 +31,7 @@ class DeleteCoverImageUseCaseTest extends TestCase
     {
         $status = $this->deleteCoverImage->run($this->fileURL);
 
+        $this->getMockedDisk()->assertMissing('covers/' . basename($this->fileURL));
         $this->assertTrue($status);
     }
 

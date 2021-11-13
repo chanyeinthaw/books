@@ -27,8 +27,7 @@ class StoreCoverImageUseCaseTest extends TestCase
     public function test_store_cover_image_should_success()
     {
         $url = $this->storeCoverImage->run($this->fakeCoverImage);
-
-        $this->assertTrue(gettype($url) === 'string');
+        $this->getMockedDisk()->assertExists('covers/' . basename($url));
     }
 
     public function test_store_cover_image_as_name_should_success() {
@@ -36,6 +35,6 @@ class StoreCoverImageUseCaseTest extends TestCase
 
         $url = $this->storeCoverImage->run($this->fakeCoverImage);
 
-        $this->assertTrue(gettype($url) === 'string');
+        $this->getMockedDisk()->assertExists('covers/' . basename($url));
     }
 }
