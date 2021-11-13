@@ -10,3 +10,4 @@ node_modules/
 /public/build
 /public/mix-manifest.json
 .env
+.phpunit.result.cache
