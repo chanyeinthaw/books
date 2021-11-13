@@ -2,7 +2,6 @@
 
 namespace App\Exceptions;
 
-use JetBrains\PhpStorm\Pure;
 
 class ResourceNotFoundException extends GeneralException {
     public function __construct(string $resource, int|array $ids = []) {
