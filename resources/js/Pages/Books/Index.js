@@ -1,9 +1,13 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {usePage} from "@inertiajs/inertia-react";
 import {Inertia} from "@inertiajs/inertia";
 
 function Index() {
-    let { books } = usePage().props
+    let { error, flash, books } = usePage().props
+
+    useEffect(() => {
+        console.log(error, flash)
+    }, [])
 
     let requestMore = () => {
         Inertia.get(route('books.index'), {
