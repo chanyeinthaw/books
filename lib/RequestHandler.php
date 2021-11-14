@@ -9,12 +9,15 @@ use App\Exceptions\GeneralException;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Validator as V;
 use Illuminate\Validation\ValidationException;
 
 abstract class RequestHandler {
     protected string $component;
     protected ?string $errorComponent = null;
     protected ?string $redirectTo = null;
+    protected bool $backOnError = false;
+    protected Validator $validator;
 
     private InertiaResponse|Response $response;
 
@@ -27,42 +30,48 @@ abstract class RequestHandler {
     /**
      * @throws ValidationException
      */
-    public function run() {
+    public function run(mixed $input) {
         $validator = $this->validator();
         $validator->validate();
 
+        $this->validator = $validator;
+
         try {
-            $this->response = $this->handler();
+            $this->response = $this->handler($input);
         } catch (Exception $e) {
             $e = $this->onError($e);
             $serializedError = serialize_exception($e);
-            $component = $this->errorComponent ?? $this->component;
 
             if ($e instanceof GeneralException) {
-                if ($this->redirectTo)
-                    $this->response = response()->redirectTo($this->redirectTo);
+                if ($this->backOnError)
+                    $this->response = redirect()
+                        ->back()
+                        ->with('error', $serializedError);
+                else if ($this->redirectTo)
+                    $this->response = response()
+                        ->redirectTo($this->redirectTo)
+                        ->with('error', $serializedError);
                 else
-                    $this->response = $this->createInertiaRenderResponse($component, null, $serializedError) ;
+                    $this->response = $this->createInertiaRenderResponse([
+                        'error' => $serializedError
+                    ], $this->errorComponent ?? $this->component);
             } else if ($e !== false) {
                 throw $e;
             }
         }
     }
 
-    protected function createInertiaRenderResponse(string $component, mixed $data, mixed $error): InertiaResponse {
-        $props = [];
-
-        if ($data) $props['data'] = $data;
-        if ($error) $props['error'] = $error;
-
-        return Inertia::render($component, $props);
+    protected function createInertiaRenderResponse(mixed $props, ?string $component = null): InertiaResponse {
+        return Inertia::render($component ?? $this->component, $props);
     }
 
     protected function onError(Exception $e): Exception|false {
         return $e;
     }
 
-    protected abstract function validator(): Validator;
+    protected function validator(): Validator {
+        return V::make($this->request->all(), []);
+    }
 
-    protected abstract function handler();
+    protected abstract function handler(mixed $input);
 }
