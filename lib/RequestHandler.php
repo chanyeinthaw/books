@@ -19,7 +19,7 @@ abstract class RequestHandler {
     protected bool $backOnError = false;
     protected Validator $validator;
 
-    private InertiaResponse|Response $response;
+    protected InertiaResponse|Response $response;
 
     public function __construct(protected Request $request) { }
 
@@ -27,22 +27,19 @@ abstract class RequestHandler {
         return $this->response;
     }
 
-    /**
-     * @throws ValidationException
-     */
+
     public function run(mixed $input) {
-        $validator = $this->validator();
-        $validator->validate();
-
-        $this->validator = $validator;
-
         try {
+            $validator = $this->validator();
+            $validator->validate();
+            $this->validator = $validator;
             $this->response = $this->handler($input);
         } catch (Exception $e) {
             $e = $this->onError($e);
-            $serializedError = serialize_exception($e);
 
             if ($e instanceof GeneralException) {
+                $serializedError = serialize_exception($e);
+
                 if ($this->backOnError)
                     $this->response = redirect()
                         ->back()
