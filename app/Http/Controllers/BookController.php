@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Handlers\Books\BookPageHandler;
+use App\Http\Handlers\Books\BooksExportHandler;
 use App\Http\Handlers\Books\CreateBookHandler;
 use App\Http\Handlers\Books\DeleteBookHandler;
 use App\Http\Handlers\Books\IndexPageHandler;
 use App\Http\Handlers\Books\RenderUpdateBookHandler;
 use App\Http\Handlers\Books\UpdateBookHandler;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -21,12 +21,10 @@ class BookController extends Controller
         protected DeleteBookHandler $deleteBook,
         protected CreateBookHandler $createBook,
         protected UpdateBookHandler $updateBook,
-        protected RenderUpdateBookHandler $renderUpdateBook
+        protected RenderUpdateBookHandler $renderUpdateBook,
+        protected BooksExportHandler $export
     ) { }
 
-    /**
-     * @throws ValidationException
-     */
     public function index(): Response
     {
         $this->indexPage->run(null);
@@ -34,18 +32,12 @@ class BookController extends Controller
         return $this->indexPage->response();
     }
 
-    /**
-     * @throws ValidationException
-     */
     public function get(int $id): Response {
         $this->bookPage->run($id);
 
         return $this->bookPage->response();
     }
 
-    /**
-     * @throws ValidationException
-     */
     public function delete(int $id): Response|\Symfony\Component\HttpFoundation\Response
     {
         $this->deleteBook->run($id);
@@ -58,9 +50,6 @@ class BookController extends Controller
         return Inertia::render('Books/Create');
     }
 
-    /**
-     * @throws ValidationException
-     */
     public function create(): Response|\Symfony\Component\HttpFoundation\Response
     {
         $this->createBook->run(null);
@@ -68,9 +57,6 @@ class BookController extends Controller
         return $this->createBook->response();
     }
 
-    /**
-     * @throws ValidationException
-     */
     public function renderUpdate(int $id): Response|RedirectResponse
     {
         $this->renderUpdateBook->run($id);
@@ -78,13 +64,17 @@ class BookController extends Controller
         return $this->renderUpdateBook->response();
     }
 
-    /**
-     * @throws ValidationException
-     */
     public function update(int $id): Response|\Symfony\Component\HttpFoundation\Response
     {
         $this->updateBook->run($id);
 
         return $this->updateBook->response();
+    }
+
+    public function export(): Response|\Symfony\Component\HttpFoundation\Response
+    {
+        $this->export->run(null);
+
+        return $this->export->response();
     }
 }

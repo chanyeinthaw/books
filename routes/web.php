@@ -17,6 +17,8 @@ Route::prefix('')->name('books.')->group(function () {
     Route::get('/create', 'BookController@renderCreate');
     Route::post('/create', 'BookController@create');
 
+    Route::get('/export', 'BookController@export');
+
     Route::get('/', 'BookController@index')->name('index');
     Route::get('/{id}', 'BookController@get')->name('get');
     Route::delete('/{id}', 'BookController@delete');
