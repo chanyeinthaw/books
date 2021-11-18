@@ -21,7 +21,7 @@ class IndexBookPageTest extends TestCase
             ->assertStatus(200)
             ->assertInertia(fn (Assert $page) =>
                  $page->component('Books/Index')
-                    ->has('books', 12, fn (Assert $page) =>
+                    ->has('books', 10, fn (Assert $page) =>
                         $page->hasAll('id', 'title', 'author', 'description', 'image')
                             ->etc()
                     )
@@ -36,7 +36,7 @@ class IndexBookPageTest extends TestCase
             ->assertStatus(200)
             ->assertInertia(fn (Assert $page) =>
             $page->component('Books/Index')
-                ->has('books', 12, fn (Assert $page) =>
+                ->has('books', 10, fn (Assert $page) =>
                 $page->hasAll('id', 'title', 'author', 'description', 'image')
                     ->etc()
                 )
