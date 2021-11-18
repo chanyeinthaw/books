@@ -21,19 +21,19 @@ class IndexPageHandler extends RequestHandler {
         parent::__construct($request);
     }
 
-    protected function validator(): Validator
-    {
-        return V::make($this->request->query(), [
-            'query' => 'string',
-        ]);
-    }
-
     protected function handler(mixed $input) : Response
     {
         $query = $this->request->query('query');
+        $sortBy = $this->request->query('sortBy', 'default');
+        $direction = $this->request->query('direction', 'asc');
+
 
         /** @var LengthAwarePaginator $books */
-        $books = $this->listBooks->run($query);
+        $books = $this->listBooks->run([
+            'query' => $query,
+            'sortBy' => $sortBy,
+            'direction' => $direction
+        ]);
 
         return $this->createInertiaRenderResponse(
             reformat_paginator_output($books, 'books')
