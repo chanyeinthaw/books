@@ -16,6 +16,7 @@ export default function Book({ book, width = 150, height = 250 }) {
 }
 
 let BookImage = styled.img`
+    object-fit: cover;
     width: ${props => props.width}px;
     height: ${props => props.height}px;
 `
