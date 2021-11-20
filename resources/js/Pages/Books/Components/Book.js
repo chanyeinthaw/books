@@ -2,16 +2,25 @@ import React from 'react'
 import {Link} from "@inertiajs/inertia-react";
 import {Paper} from "@mui/material";
 import styled from "@emotion/styled";
+import {PriorityHighOutlined} from "@mui/icons-material";
 
-export default function Book({ book, width = 150, height = 250 }) {
-    return <Paper key={book.id} elevation={1} sx={{
+export default function Book({ book, width = 150, height = 250, invalid = false, sx = {} }) {
+    let invalidStyles = {
+        display: 'grid',
+        placeContent: 'center'
+    }
+
+    return <Paper elevation={1} sx={{
         width,
         height,
-        overflow: "hidden"
+        overflow: "hidden",
+        ...sx,
+        ...(invalid ? invalidStyles : {})
     }} >
+        { invalid ? <PriorityHighOutlined color="primary" sx={{ fontSize: 84 }}/> :
         <Link href={`/${book.id}`}>
             <BookImage src={book.image} alt={book.title} width={width} height={height}/>
-        </Link>
+        </Link> }
     </Paper>
 }
 
