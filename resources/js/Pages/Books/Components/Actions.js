@@ -1,9 +1,16 @@
 import React, {useEffect, useState} from "react";
-import {Box, Button, InputAdornment, TextField} from "@mui/material";
+import {
+    Box,
+    Button,
+    InputAdornment,
+    TextField
+} from "@mui/material";
 import {AddCircleOutline, Close, ImportExport, SearchOutlined} from "@mui/icons-material";
+import ExportDialog from "./ExportDialog";
 
 export default function Actions({ onQuery, onClear }) {
     let [query, setQuery] = useState('')
+    let [openExportDialog, setOpenExportDialog] = useState(false)
 
     useEffect(() => {
         setQuery(new URLSearchParams(window.location.search).get('query') ?? '')
@@ -14,8 +21,15 @@ export default function Actions({ onQuery, onClear }) {
         onClear()
     }
 
+    let handleDownload = ({ option, format }) => {
+        let url = `${route('books.export')}?format=${format}&option=${option}`
+
+        window.open(url, '_blank').focus()
+    }
+
     return (
         <Box gridArea={'action'} display={'grid'} gridTemplateColumns={'1fr auto'} columnGap={'102px'}>
+            <ExportDialog open={openExportDialog} onClose={() => setOpenExportDialog(false)} onDownload={handleDownload}/>
             <TextField
                 value={query}
                 onKeyDown={(event) => {
@@ -43,7 +57,7 @@ export default function Actions({ onQuery, onClear }) {
                 variant={'outlined'}
             />
             <Box gridTemplateColumns={'1fr 1fr'} display={'grid'} columnGap={'8px'}>
-                <Button variant={'outlined'} size={"small"} startIcon={<ImportExport />}>
+                <Button variant={'outlined'} size={"small"} startIcon={<ImportExport />} onClick={() => setOpenExportDialog(true)}>
                     Export
                 </Button>
                 <Button variant={"contained"} size={"small"} startIcon={<AddCircleOutline />}>
