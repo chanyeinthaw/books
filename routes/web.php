@@ -14,14 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('')->name('books.')->group(function () {
-    Route::get('/create', 'BookController@renderCreate');
-    Route::post('/create', 'BookController@create');
+    Route::get('/create', 'BookController@renderCreate')->name('create.render');
+    Route::post('/create', 'BookController@create')->name('create');
 
     Route::get('/export', 'BookController@export')->name('export');
 
     Route::get('/', 'BookController@index')->name('index');
     Route::get('/{id}', 'BookController@get')->name('get');
-    Route::delete('/{id}', 'BookController@delete');
+    Route::delete('/{id}', 'BookController@delete')->name('delete');
 
     Route::get('/{id}/edit', 'BookController@renderUpdate');
     Route::patch('/{id}/edit', 'BookController@update');
