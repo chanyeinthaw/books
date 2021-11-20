@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { createInertiaApp } from '@inertiajs/inertia-react'
-import {createTheme, ThemeProvider} from "@mui/material";
+import {Box, createTheme, ThemeProvider} from "@mui/material";
 import {blueGrey, grey, orange, red} from "@mui/material/colors";
 
 createInertiaApp({
@@ -18,7 +18,11 @@ createInertiaApp({
 
 
         render(<ThemeProvider theme={theme}>
-            <App {...props} />
+            <Box display={'grid'} marginTop={'64px'} sx={{
+                placeContent: 'center',
+            }}>
+                <App {...props} />
+            </Box>
         </ThemeProvider> , el)
     },
 }).then()

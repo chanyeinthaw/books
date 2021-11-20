@@ -51,34 +51,30 @@ function Index() {
     }
 
     return (
-        <Box display={'grid'} marginTop={'64px'} sx={{
-            placeContent: 'center',
-        }}>
-            <Box width={'886px'} display={"grid"} gridTemplateAreas={"'action''books'"} gap={'48px'}>
-                <Actions onQuery={query} onClear={clear}/>
+        <Box width={'886px'} display={"grid"} gridTemplateAreas={"'action''books'"} gap={'48px'}>
+            <Actions onQuery={query} onClear={clear}/>
 
-                <Box display={"grid"} gridArea={'books'} gridAutoFlow={"row"} rowGap={'16px'}>
-                    <Box display={'grid'} gridTemplateColumns={'max-content max-content'} columnGap={'16px'}>
-                        <SortingMenu onItemClick={sort} text={'Sort by'} queryKey={'sortBy'} defaultValue='default' items={['default', 'title', 'author']}/>
-                        <SortingMenu onItemClick={changeDirection} text={'Direction'} queryKey={'direction'} defaultValue={direction} items={['asc', 'desc']}/>
-                    </Box>
-                    <Box display={"grid"} gridTemplateColumns={"repeat(auto-fill, 150px)"} rowGap={'32px'} justifyContent={"space-between"}>
-                        { books.map((book) => <Book key={book.id} book={book} />) }
-                        { books.length <= 5 &&
-                            Array.from({ length: 6 - books.length })
-                                .map((_, i) => <div style={{height: 250}} key={i} />)
-                        }
-                    </Box>
+            <Box display={"grid"} gridArea={'books'} gridAutoFlow={"row"} rowGap={'16px'}>
+                <Box display={'grid'} gridTemplateColumns={'max-content max-content'} columnGap={'16px'}>
+                    <SortingMenu onItemClick={sort} text={'Sort by'} queryKey={'sortBy'} defaultValue='default' items={['default', 'title', 'author']}/>
+                    <SortingMenu onItemClick={changeDirection} text={'Direction'} queryKey={'direction'} defaultValue={direction} items={['asc', 'desc']}/>
                 </Box>
-
-                <Pagination sx={{ justifySelf: 'center' }}
-                    onChange={paginate}
-                    hidePrevButton={meta.current_page === 1}
-                    hideNextButton={meta.current_page === meta.last_page}
-                    count={meta.last_page}
-                    color={"primary"}
-                    page={meta.current_page} />
+                <Box display={"grid"} gridTemplateColumns={"repeat(auto-fill, 150px)"} rowGap={'32px'} justifyContent={"space-between"}>
+                    { books.map((book) => <Book key={book.id} book={book} />) }
+                    { books.length <= 5 &&
+                    Array.from({ length: 6 - books.length })
+                        .map((_, i) => <div style={{height: 250}} key={i} />)
+                    }
+                </Box>
             </Box>
+
+            <Pagination sx={{ justifySelf: 'center' }}
+                        onChange={paginate}
+                        hidePrevButton={meta.current_page === 1}
+                        hideNextButton={meta.current_page === meta.last_page}
+                        count={meta.last_page}
+                        color={"primary"}
+                        page={meta.current_page} />
         </Box>
     )
 }
