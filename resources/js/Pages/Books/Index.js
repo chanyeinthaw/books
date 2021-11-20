@@ -5,10 +5,12 @@ import {Box, Pagination } from "@mui/material";
 import Book from "./Components/Book";
 import Actions from "./Components/Actions";
 import SortingMenu from "./Components/SortingMenu";
+import useNotificationStack from "./Hooks/useNotificationStack";
 
 function Index() {
     let { books, meta } = usePage().props
     let [direction, setDirection] = useState('asc')
+    useNotificationStack()
 
     let refresh = ({ query, page , sortBy, direction }) => {
         let params = new URLSearchParams(window.location.search)
