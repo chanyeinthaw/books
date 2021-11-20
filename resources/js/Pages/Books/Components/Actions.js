@@ -60,7 +60,7 @@ export default function Actions({ onQuery, onClear }) {
                 <Button variant={'outlined'} size={"small"} startIcon={<ImportExport />} onClick={() => setOpenExportDialog(true)}>
                     Export
                 </Button>
-                <Button variant={"contained"} size={"small"} startIcon={<AddCircleOutline />}>
+                <Button href={route('books.create.render')} variant={"contained"} size={"small"} startIcon={<AddCircleOutline />}>
                     New book
                 </Button>
             </Box>
