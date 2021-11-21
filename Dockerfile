@@ -26,7 +26,7 @@ ARG LARAVEL_PATH
 
 COPY --from=node /public/js/ $LARAVEL_PATH/public/js/
 COPY --from=node /public/css/ $LARAVEL_PATH/public/css/
-COPY --from=node /public/mix-manifest.json $LARAVEL_PATH/mix-manifest.json
+COPY --from=node /mix-manifest.json $LARAVEL_PATH/public/mix-manifest.json
 
 RUN apt-get update && apt-get install -y \
     libzip-dev \
