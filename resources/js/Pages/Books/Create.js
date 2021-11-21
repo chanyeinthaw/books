@@ -34,7 +34,7 @@ function Create() {
                 _method: 'PATCH',
                 ...data
             })
-        } else return post('books.create')
+        } else return post(route('books.create'))
     }
 
     return (
