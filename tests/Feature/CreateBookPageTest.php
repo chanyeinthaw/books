@@ -39,7 +39,7 @@ class CreateBookPageTest extends TestCase
 
         $response->assertStatus(200)
             ->assertInertia(
-                fn (Assert $page) => $page->component('Books/Index')
+                fn (Assert $page) => $page->component('Books/Book')
                     ->where('flash.message', 'Book created!')
             );
     }

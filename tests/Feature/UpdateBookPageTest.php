@@ -39,7 +39,7 @@ class UpdateBookPageTest extends TestCase
             'image' => UploadedFile::fake()->image('image.png')
         ])->assertStatus(200)
             ->assertInertia(
-                fn (Assert $page) => $page->component('Books/Index')
+                fn (Assert $page) => $page->component('Books/Book')
                     ->where('flash.message', 'Book updated!')
             );
     }

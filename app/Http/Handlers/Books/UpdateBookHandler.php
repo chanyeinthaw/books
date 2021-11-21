@@ -44,7 +44,7 @@ class UpdateBookHandler extends RequestHandler {
             'partial' => $data
         ]);
 
-        return redirect($this->redirectTo)
+        return redirect($this->redirectTo . "$input")
             ->with('message', 'Book updated!');
     }
 }

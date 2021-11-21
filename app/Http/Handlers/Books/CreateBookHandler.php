@@ -39,9 +39,9 @@ class CreateBookHandler extends RequestHandler {
     {
         $data = $this->validator->validated();
 
-        $this->createBook->run($data);
+        $book = $this->createBook->run($data);
 
-        return redirect($this->redirectTo)
+        return redirect($this->redirectTo . "$book->id")
             ->with('message', 'Book created!');
     }
 }
