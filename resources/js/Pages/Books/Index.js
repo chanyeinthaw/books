@@ -9,7 +9,7 @@ import useNotificationStack from "./Hooks/useNotificationStack";
 
 function Index() {
     let { books, meta } = usePage().props
-    let [direction, setDirection] = useState('asc')
+    let [direction, setDirection] = useState('desc')
     useNotificationStack()
 
     let refresh = ({ query, page , sortBy, direction }) => {
