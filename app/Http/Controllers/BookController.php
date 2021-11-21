@@ -32,13 +32,13 @@ class BookController extends Controller
         return $this->indexPage->response();
     }
 
-    public function get(int $id): Response {
+    public function get($id): Response {
         $this->bookPage->run($id);
 
         return $this->bookPage->response();
     }
 
-    public function delete(int $id): Response|\Symfony\Component\HttpFoundation\Response
+    public function delete($id): Response|\Symfony\Component\HttpFoundation\Response
     {
         $this->deleteBook->run($id);
 
@@ -57,14 +57,14 @@ class BookController extends Controller
         return $this->createBook->response();
     }
 
-    public function renderUpdate(int $id): Response|RedirectResponse
+    public function renderUpdate($id): Response|RedirectResponse
     {
         $this->renderUpdateBook->run($id);
 
         return $this->renderUpdateBook->response();
     }
 
-    public function update(int $id): Response|\Symfony\Component\HttpFoundation\Response
+    public function update($id): Response|\Symfony\Component\HttpFoundation\Response
     {
         $this->updateBook->run($id);
 
