@@ -24,7 +24,7 @@ export default function Book({ book, width = 150, height = 250, invalid = false,
     </Paper>
 }
 
-let BookImage = styled.img`
+export const BookImage = styled.img`
     object-fit: cover;
     width: ${props => props.width}px;
     height: ${props => props.height}px;
