@@ -25,7 +25,7 @@ class IndexPageHandler extends RequestHandler {
     {
         $query = $this->request->query('query');
         $sortBy = $this->request->query('sortBy', 'default');
-        $direction = $this->request->query('direction', 'asc');
+        $direction = $this->request->query('direction', 'desc');
 
 
         /** @var LengthAwarePaginator $books */
