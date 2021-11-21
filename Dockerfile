@@ -1,14 +1,4 @@
 ARG LARAVEL_PATH=/var/www/html
-FROM node:16.13.0 AS node
-
-COPY yarn.lock $LARAVEL_PATH
-COPY package.json $LARAVEL_PATH
-
-RUN yarn install
-COPY . $LARAVEL_PATH
-
-RUN yarn production
-COPY . $LARAVEL_PATH
 
 FROM composer:2.1.11 AS composer
 ARG LARAVEL_PATH
@@ -21,10 +11,22 @@ COPY . $LARAVEL_PATH
 COPY .env.production $LARAVEL_PATH/.env
 RUN composer install --working-dir $LARAVEL_PATH --ignore-platform-reqs --no-progress --optimize-autoloader
 
+FROM node:16.13.0 AS node
+RUN mkdir /public
+
+COPY yarn.lock package.json webpack.mix.js /
+RUN ls -l
+COPY resources resources
+
+WORKDIR /
+RUN yarn install && yarn production
+
 FROM php:8.0-apache
 ARG LARAVEL_PATH
 
-COPY --from=node . $LARAVEL_PATH
+COPY --from=node /public/js/ $LARAVEL_PATH/public/js/
+COPY --from=node /public/css/ $LARAVEL_PATH/public/css/
+COPY --from=node /public/mix-manifest.json $LARAVEL_PATH/mix-manifest.json
 
 RUN apt-get update && apt-get install -y \
     libzip-dev \
@@ -45,6 +47,6 @@ RUN mkdir -p /root/.composer
 COPY --from=composer /tmp/cache /root/.composer/cache
 COPY --from=composer $LARAVEL_PATH $LARAVEL_PATH
 
-RUN chown -R www-data $LARAVEL_PATH/storage
+RUN chown -R www-data:www-data $LARAVEL_PATH/storage
 
 WORKDIR $LARAVEL_PATH
