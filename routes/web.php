@@ -23,6 +23,6 @@ Route::prefix('')->name('books.')->group(function () {
     Route::get('/{id}', 'BookController@get')->name('get');
     Route::delete('/{id}', 'BookController@delete')->name('delete');
 
-    Route::get('/{id}/edit', 'BookController@renderUpdate');
-    Route::patch('/{id}/edit', 'BookController@update');
+    Route::get('/{id}/edit', 'BookController@renderUpdate')->name('update.render');
+    Route::patch('/{id}/edit', 'BookController@update')->name('update');
 });
