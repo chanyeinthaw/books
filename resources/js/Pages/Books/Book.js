@@ -5,8 +5,10 @@ import {Box, Button, Typography} from "@mui/material";
 import {DeleteOutlined, EditOutlined} from "@mui/icons-material";
 import BookDetailLayout from "./Layouts/BookDetailLayout";
 import useHandleBookDelete from "./Hooks/useHandleBookDelete";
+import useNotificationStack from "./Hooks/useNotificationStack";
 
 function BookPage() {
+    useNotificationStack()
     let { error, book } = usePage().props
 
     let handleDelete = useHandleBookDelete();
@@ -14,11 +16,11 @@ function BookPage() {
     return (
         <BookDetailLayout error={error} buttons={[
             <Button onClick={_ => handleDelete(book.id)} variant={'text'} startIcon={<DeleteOutlined />} color={"error"} size={"small"}>Delete</Button>,
-            <Button variant={'text'} startIcon={<EditOutlined />} color={"primary"} size={"small"}>Edit</Button>
+            <Button href={route('books.update.render', [book.id])} variant={'text'} startIcon={<EditOutlined />} color={"primary"} size={"small"}>Edit</Button>
         ]}>
             <Book sx={{ gridArea: 'book' }} book={book} invalid={!!error} />
             <Box display={"flex"} flexDirection={"column"} sx={{
-                maxWidth: '400px',
+                width: '400px',
                 overflow: 'hidden'
             }}>
                 <Typography variant={'h3'} color={"primary"} sx={{
