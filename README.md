@@ -8,6 +8,11 @@ Book Catalog is a web application in which users can create, update, delete thei
 - Inertia (React)
 - Docker
 
+## Environment variables
+
+Template of environment variables are written in `.env.example` file. 
+To use custom values for `database`, update `DB_` prefixed variables and to change `storage` option, update `FILE_SYSTEM_DRIVER` and `AWS_` prefixed variables. 
+
 ## Usage 
 
 - install `docker` and `docker-compose`.
