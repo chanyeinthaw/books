@@ -16,7 +16,7 @@ function BookPage() {
     return (
         <BookDetailLayout error={error} buttons={[
             <Button onClick={_ => handleDelete(book.id)} variant={'text'} startIcon={<DeleteOutlined />} color={"error"} size={"small"}>Delete</Button>,
-            <Button href={route('books.update.render', [book.id])} variant={'text'} startIcon={<EditOutlined />} color={"primary"} size={"small"}>Edit</Button>
+            <Button href={route('books.update.render', [book?.id ?? 0])} variant={'text'} startIcon={<EditOutlined />} color={"primary"} size={"small"}>Edit</Button>
         ]}>
             <Book sx={{ gridArea: 'book' }} book={book} invalid={!!error} />
             <Box display={"flex"} flexDirection={"column"} sx={{
