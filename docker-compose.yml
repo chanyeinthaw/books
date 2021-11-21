@@ -1,0 +1,35 @@
+version: "3.7"
+
+services:
+  books-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: books-app
+    ports:
+      - '80:80'
+    volumes:
+      - .:/var/www/html
+    networks:
+        - app-network
+
+  db:
+    image: mariadb
+    container_name: books-db
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: books
+      MYSQL_ROOT_PASSWORD: db-pwd
+    volumes:
+      - dbdata:/var/lib/mysql/
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
