@@ -2,7 +2,7 @@ import {Box, Button} from "@mui/material";
 import React from "react";
 import {ChevronLeftOutlined} from "@mui/icons-material";
 
-export default function BookDetailLayout({ navigateBack = false, error, buttons, children }) {
+export default function BookDetailLayout({ navigateBack = false, error = false, buttons, children, sx = {} }) {
     let navigationProps = navigateBack ? {
        onClick: () => window.history.back()
     } : { href: route('books.index') }
@@ -11,7 +11,8 @@ export default function BookDetailLayout({ navigateBack = false, error, buttons,
         <Box sx={{
             display: "grid",
             gridTemplateAreas: '"head head" "book detail"',
-            gridGap: '16px'
+            gridGap: '16px',
+            ...sx
         }}>
             <Box display={"grid"} gridArea={"head"} gridTemplateColumns={"1fr max-content max-content"} justifyContent={"end"} alignContent={"end"} gap={"16px"}>
                 <Button {...navigationProps} variant={'text'} startIcon={<ChevronLeftOutlined />} color={"primary"} size={"small"} sx={{
